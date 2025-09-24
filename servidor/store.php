@@ -19,11 +19,13 @@
 
     ];
 
+    $nombre_foto = $crud->generar_nombre_foto($_FILES["foto"]["name"]);
+    // Con esto obtenemos el nombre de un archivo por medio de rquest
     $datos_file = [ // [foto] -> nombre del archivo,, nombre de control ... [name] -> nombre de la propiedad/control, llave de type
-        "nombre" => $_FILES["foto"]["name"], // el nombre que ira como referencia a la tabla, este es el de los input, los name
+        "nombre" => $nombre_foto, // el nombre que ira como referencia a la tabla, este es el de los input, los name
         // tmp es donde se alojara la imagen
         "origen" => $_FILES["foto"]["tmp_name"], // saber de donde viene, por eso le pusimos origen
-        "destino" => "../public/upload/" . $_FILES["foto"]["name"] 
+        "destino" => "../public/upload/" . $nombre_foto, 
     ];
 
     $id_contacto = $crud->store($datos);
@@ -33,12 +35,12 @@
         if($crud->store_path($id_contacto, $datos_file["nombre"], $datos_file["destino"])){
             // move_uploaded_file es para subir el archivo en la carpeta. move -> mover | uploaded_file -> subir archivo
             // retorna valores booleanos (true o false / 0 o 1)
-            if(move_uploaded_file($datos_file["origen"], $datos_file["destino"]))
+            if(!move_uploaded_file($datos_file["origen"], $datos_file["destino"]))
                 {
-                    header("location:../index.php");
-                    echo "bien";
+                    
+                    echo "Fallo al mover";
             } else {
-                echo "Fallo al mover";
+                header("location:../index.php");
             }
         } else {
             echo "Fallo al agregar la ruta";

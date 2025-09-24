@@ -5,7 +5,7 @@
     $contacto = $crud->show($_GET["id"]);
 ?>
 
-<form method="POST" action="servidor/update.php">
+<form method="POST" action="servidor/update.php" enctype="multipart/form-data">
     <div class="container mt-4">
         <div class="d-flex justify-content-center align-items-center vh-100">
             <div class="glass-card p-4" style="width: 100%; max-width: 400px;"">
@@ -49,4 +49,3 @@
         </div> 
     </div>
 </form>
- 
